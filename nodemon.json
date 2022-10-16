@@ -1,0 +1,8 @@
+{
+  "env": {
+    "MONGO_USER": "admin",
+    "MONGO_PASSWORD": "admin",
+    "MONGO_DEFAULT_DATABASE": "restaurant?retryWrites=true&w=majority",
+    "PORT": 8080
+  }
+}

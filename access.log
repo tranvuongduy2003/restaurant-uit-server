@@ -1,0 +1,2 @@
+::1 - - [16/Oct/2022:12:11:52 +0000] "GET / HTTP/1.1" 404 139 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36"
+::1 - - [16/Oct/2022:12:13:59 +0000] "GET /favicon.ico HTTP/1.1" 404 150 "http://localhost:3000/product" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36"
