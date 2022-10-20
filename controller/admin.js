@@ -4,7 +4,6 @@ const { httpStatus } = require('../utils/httpStatus');
 
 exports.postCreateFood = async (req, res, next) => {
   try {
-    console.log(req.body);
     const name = req.body.name;
     const categoryId = req.body.categoryId;
     const price = req.body.price;
@@ -24,6 +23,9 @@ exports.postCreateFood = async (req, res, next) => {
       popular,
     });
     await food.save();
+    const category = await Category.findById(categoryId);
+    category.foods = [...category.foods, food._id];
+    await category.save();
     res.status(httpStatus.CREATED).json({
       message: 'Food created successfully',
       food: food,
