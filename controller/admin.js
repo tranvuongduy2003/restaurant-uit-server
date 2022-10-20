@@ -4,6 +4,7 @@ const { httpStatus } = require('../utils/httpStatus');
 
 exports.postCreateFood = async (req, res, next) => {
   try {
+    console.log(req.body);
     const name = req.body.name;
     const categoryId = req.body.categoryId;
     const price = req.body.price;
