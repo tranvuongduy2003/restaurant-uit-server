@@ -17,3 +17,19 @@ exports.getCategories = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getCategory = async (req, res, next) => {
+  try {
+    const categoryId = req.params.categoryId;
+    const category = await Category.findById(categoryId);
+    res.status(httpStatus.OK).json({
+      message: 'Fetched category successfully',
+      category: category,
+    });
+  } catch (error) {
+    if (!error) {
+      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
+    }
+    next(error);
+  }
+};
