@@ -10,7 +10,8 @@ const helmet = require('helmet');
 const compression = require('compression');
 const morgan = require('morgan');
 
-const productRouter = require('./router/product');
+const adminRouter = require('./router/admin');
+const foodRouter = require('./router/food');
 const categoryRouter = require('./router/category');
 
 const app = express();
@@ -32,7 +33,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/product', productRouter);
+app.use('/admin', adminRouter);
+app.use('/food', foodRouter);
 app.use('/category', categoryRouter);
 
 const accessLogStream = fs.createWriteStream(

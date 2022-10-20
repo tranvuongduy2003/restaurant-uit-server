@@ -8,10 +8,14 @@ const categorySchema = new Schema(
       type: String,
       required: true,
     },
-    products: [
+    image: {
+      type: String,
+      required: true,
+    },
+    foods: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Product',
+        ref: 'Food',
       },
     ],
   },
