@@ -25,4 +25,6 @@ const categorySchema = new Schema(
   { timestamps: true }
 );
 
+categorySchema.index({ name: 'text' });
+
 module.exports = mongoose.model('Category', categorySchema);

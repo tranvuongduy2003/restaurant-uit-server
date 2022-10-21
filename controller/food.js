@@ -71,15 +71,26 @@ exports.getPopular = async (req, res, next) => {
 exports.getSearchFoods = async (req, res, next) => {
   try {
     const name = req.query.name;
-    const totalItems = await Food.find({
-      $text: { $search: '"' + name + '"' },
-    }).countDocuments();
-    const foods = await Food.find({ $text: { $search: '"' + name + '"' } });
-    res.status(httpStatus.OK).json({
-      message: 'Search food successfully',
-      foods: foods,
-      totalItems: totalItems,
-    });
+    const category = req.query.category;
+    if (name !== '') {
+      const totalItems = await Food.find({
+        $text: { $search: name },
+      }).countDocuments();
+      const foods = await Food.find({ $text: { $search: name } });
+      res.status(httpStatus.OK).json({
+        message: 'Search food successfully',
+        foods: foods,
+        totalItems: totalItems,
+      });
+    } else {
+      const totalItems = await Food.find().countDocuments();
+      const foods = await Food.find();
+      res.status(httpStatus.OK).json({
+        message: 'Fetched foods successfully',
+        foods: foods,
+        totalItems: totalItems,
+      });
+    }
   } catch (error) {
     if (!error) {
       error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
