@@ -33,3 +33,20 @@ exports.getCategory = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getPopular = async (req, res, next) => {
+  try {
+    const totalItems = await Category.find({ popular: true }).countDocuments();
+    const popular = await Category.find({ popular: true });
+    res.status(httpStatus.OK).json({
+      message: 'Fetched popular category successfully',
+      categorys: popular,
+      totalItems: totalItems,
+    });
+  } catch (error) {
+    if (!error) {
+      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
+    }
+    next(error);
+  }
+};

@@ -12,6 +12,9 @@ const categorySchema = new Schema(
       type: String,
       required: true,
     },
+    popular: {
+      type: Boolean,
+    },
     foods: [
       {
         type: Schema.Types.ObjectId,

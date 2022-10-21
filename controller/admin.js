@@ -42,10 +42,12 @@ exports.postCreateCategory = async (req, res, next) => {
   try {
     const name = req.body.name;
     const image = req.body.image;
+    const popular = req.body.popular;
     const foods = [];
     const category = new Category({
       name,
       image,
+      popular,
       foods,
     });
     await category.save();

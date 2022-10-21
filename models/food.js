@@ -39,4 +39,6 @@ const foodSchema = new Schema(
   { timestamps: true }
 );
 
+foodSchema.index({ name: 'text' });
+
 module.exports = mongoose.model('Food', foodSchema);

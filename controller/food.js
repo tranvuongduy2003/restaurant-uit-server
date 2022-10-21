@@ -56,8 +56,28 @@ exports.getPopular = async (req, res, next) => {
     const totalItems = await Food.find({ popular: true }).countDocuments();
     const popular = await Food.find({ popular: true });
     res.status(httpStatus.OK).json({
-      message: 'Fetched best deals successfully',
+      message: 'Fetched popular food successfully',
       foods: popular,
+      totalItems: totalItems,
+    });
+  } catch (error) {
+    if (!error) {
+      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
+    }
+    next(error);
+  }
+};
+
+exports.getSearchFoods = async (req, res, next) => {
+  try {
+    const name = req.query.name;
+    const totalItems = await Food.find({
+      $text: { $search: '"' + name + '"' },
+    }).countDocuments();
+    const foods = await Food.find({ $text: { $search: '"' + name + '"' } });
+    res.status(httpStatus.OK).json({
+      message: 'Search food successfully',
+      foods: foods,
       totalItems: totalItems,
     });
   } catch (error) {

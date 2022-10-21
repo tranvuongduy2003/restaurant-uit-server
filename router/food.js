@@ -6,10 +6,12 @@ const router = express.Router();
 
 router.get('/', foodController.getFoods);
 
-router.get('/:foodId', foodController.getFood);
-
 router.get('/best-deals', foodController.getBestDeals);
 
 router.get('/popular', foodController.getPopular);
+
+router.get('/search', foodController.getSearchFoods);
+
+router.get('/:foodId', foodController.getFood);
 
 module.exports = router;
