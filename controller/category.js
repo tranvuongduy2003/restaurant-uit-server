@@ -40,7 +40,7 @@ exports.getPopular = async (req, res, next) => {
     const popular = await Category.find({ popular: true });
     res.status(httpStatus.OK).json({
       message: 'Fetched popular category successfully',
-      categorys: popular,
+      categories: popular,
       totalItems: totalItems,
     });
   } catch (error) {
