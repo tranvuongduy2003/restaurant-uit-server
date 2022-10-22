@@ -113,8 +113,8 @@ exports.updateFood = async (req, res, next) => {
     const name = req.body.name;
     const categoryId = req.body.categoryId;
     const price = req.body.price;
-    // const images = req.body.images;
-    // const posterImage = images[0];
+    const images = req.body.images;
+    const posterImage = images[0];
     const description = req.body.description;
     const bestDeals = req.body.bestDeals;
     const popular = req.body.popular;
@@ -122,6 +122,8 @@ exports.updateFood = async (req, res, next) => {
     food.name = name;
     food.categoryId = categoryId;
     food.price = price;
+    food.images = images;
+    food.posterImage = posterImage;
     food.description = description;
     food.bestDeals = bestDeals;
     food.popular = popular;
