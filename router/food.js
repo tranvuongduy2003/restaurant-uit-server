@@ -14,4 +14,8 @@ router.get('/search', foodController.getSearchFoods);
 
 router.get('/:foodId', foodController.getFood);
 
+router.put('/:foodId', foodController.updateFood);
+
+router.delete('/:foodId', foodController.deleteFood);
+
 module.exports = router;

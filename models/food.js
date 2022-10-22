@@ -17,13 +17,25 @@ const foodSchema = new Schema(
     },
     images: [
       {
-        type: String,
-        required: true,
+        ref: {
+          type: String,
+          required: true,
+        },
+        url: {
+          type: String,
+          required: true,
+        },
       },
     ],
     posterImage: {
-      type: String,
-      required: true,
+      ref: {
+        type: String,
+        required: true,
+      },
+      url: {
+        type: String,
+        required: true,
+      },
     },
     description: {
       type: String,

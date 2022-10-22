@@ -12,6 +12,10 @@ const categorySchema = new Schema(
       type: String,
       required: true,
     },
+    imageRef: {
+      type: String,
+      required: true,
+    },
     popular: {
       type: Boolean,
     },

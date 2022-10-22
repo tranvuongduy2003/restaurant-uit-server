@@ -7,3 +7,4 @@
 ::1 - - [20/Oct/2022:13:29:43 +0000] "GET /635149a94940302d579ccd8a HTTP/1.1" 404 163 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36"
 ::1 - - [20/Oct/2022:13:29:49 +0000] "GET /food/635149a94940302d579ccd8a HTTP/1.1" 404 168 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36"
 ::1 - - [21/Oct/2022:06:15:06 +0000] "GET /favicon.ico HTTP/1.1" 404 150 "http://localhost:8080/food/search?bo" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36"
+::1 - - [22/Oct/2022:02:47:25 +0000] "GET /favicon.ico HTTP/1.1" 404 150 "http://localhost:8080/food" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36"

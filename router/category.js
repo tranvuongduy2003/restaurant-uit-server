@@ -12,4 +12,8 @@ router.get('/search', categoryController.getSearchCategories);
 
 router.get('/:categoryId', categoryController.getCategory);
 
+router.put('/:categoryId', categoryController.updateCategory);
+
+router.delete('/:categoryId', categoryController.deleteCategory);
+
 module.exports = router;
