@@ -10,8 +10,6 @@ router.get('/best-deals', foodController.getBestDeals);
 
 router.get('/popular', foodController.getPopular);
 
-router.get('/search', foodController.getSearchFoods);
-
 router.get('/:foodId', foodController.getFood);
 
 router.put('/:foodId', foodController.updateFood);

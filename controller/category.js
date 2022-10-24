@@ -4,15 +4,22 @@ const { httpStatus } = require('../utils/httpStatus');
 exports.getCategories = async (req, res, next) => {
   try {
     let categories = [];
-    const totalItems = await Category.find().countDocuments();
+    let categoryParams = {};
+    if (req.query.search) {
+      categoryParams = {
+        ...categoryParams,
+        $text: { $search: req.query.search },
+      };
+    }
+    const totalItems = await Category.find(categoryParams).countDocuments();
     if (req.query.page) {
       const currentPage = req.query.page;
       const perPage = 5;
-      categories = await Category.find()
+      categories = await Category.find(categoryParams)
         .skip((currentPage - 1) * perPage)
         .limit(perPage);
     } else {
-      categories = await Category.find();
+      categories = await Category.find(categoryParams);
     }
     res.status(httpStatus.OK).json({
       message: 'Fetched categories successfully',

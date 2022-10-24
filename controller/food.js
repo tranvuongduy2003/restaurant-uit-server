@@ -4,15 +4,22 @@ const { httpStatus } = require('../utils/httpStatus');
 exports.getFoods = async (req, res, next) => {
   try {
     let foods = [];
-    const totalItems = await Food.find().countDocuments();
+    let foodParams = {};
+    if (req.query.category) {
+      foodParams = { ...foodParams, categoryId: req.query.category };
+    }
+    if (req.query.search) {
+      foodParams = { ...foodParams, $text: { $search: req.query.search } };
+    }
+    const totalItems = await Food.find(foodParams).countDocuments();
     if (req.query.page) {
       const currentPage = req.query.page;
       const perPage = 5;
-      foods = await Food.find()
+      foods = await Food.find(foodParams)
         .skip((currentPage - 1) * perPage)
         .limit(perPage);
     } else {
-      foods = await Food.find();
+      foods = await Food.find(foodParams);
     }
     res.status(httpStatus.OK).json({
       message: 'Fetched foods successfully',
@@ -69,36 +76,6 @@ exports.getPopular = async (req, res, next) => {
       foods: popular,
       totalItems: totalItems,
     });
-  } catch (error) {
-    if (!error) {
-      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
-    }
-    next(error);
-  }
-};
-
-exports.getSearchFoods = async (req, res, next) => {
-  try {
-    const name = req.query.name;
-    if (name !== '') {
-      const totalItems = await Food.find({
-        $text: { $search: name },
-      }).countDocuments();
-      const foods = await Food.find({ $text: { $search: name } });
-      res.status(httpStatus.OK).json({
-        message: 'Search food successfully',
-        foods: foods,
-        totalItems: totalItems,
-      });
-    } else {
-      const totalItems = await Food.find().countDocuments();
-      const foods = await Food.find();
-      res.status(httpStatus.OK).json({
-        message: 'Fetched foods successfully',
-        foods: foods,
-        totalItems: totalItems,
-      });
-    }
   } catch (error) {
     if (!error) {
       error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
