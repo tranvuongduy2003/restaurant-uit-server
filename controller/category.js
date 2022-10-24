@@ -67,38 +67,6 @@ exports.getPopular = async (req, res, next) => {
   }
 };
 
-exports.getSearchCategories = async (req, res, next) => {
-  try {
-    const name = req.query.name;
-    if (name !== '') {
-      const totalItems = await Category.find({
-        $text: { $search: name },
-      }).countDocuments();
-      const categories = await Category.find({
-        $text: { $search: name },
-      });
-      res.status(httpStatus.OK).json({
-        message: 'Search category successfully',
-        categories: categories,
-        totalItems: totalItems,
-      });
-    } else {
-      const totalItems = await Category.find().countDocuments();
-      const categories = await Category.find();
-      res.status(httpStatus.OK).json({
-        message: 'Fetched categories successfully',
-        categories: categories,
-        totalItems: totalItems,
-      });
-    }
-  } catch (error) {
-    if (!error) {
-      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
-    }
-    next(error);
-  }
-};
-
 exports.updateCategory = async (req, res, next) => {
   try {
     const categoryId = req.params.categoryId;

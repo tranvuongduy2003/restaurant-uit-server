@@ -8,8 +8,6 @@ router.get('/', categoryController.getCategories);
 
 router.get('/popular', categoryController.getPopular);
 
-router.get('/search', categoryController.getSearchCategories);
-
 router.get('/:categoryId', categoryController.getCategory);
 
 router.put('/:categoryId', categoryController.updateCategory);
