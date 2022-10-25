@@ -1,4 +1,5 @@
 const Food = require('../models/food');
+const Category = require('../models/category');
 const { httpStatus } = require('../utils/httpStatus');
 
 exports.getFoods = async (req, res, next) => {
@@ -121,6 +122,10 @@ exports.deleteFood = async (req, res, next) => {
   try {
     const foodId = req.params.foodId;
     const food = await Food.findByIdAndRemove(foodId);
+    const category = await Category.findById(food.categoryId);
+    const foodIndex = category.foods.findIndex((item) => item._id === food._id);
+    category.foods.splice(foodIndex, 1);
+    await category.save();
     res.status(httpStatus.OK).json({
       message: 'Delete food successfully',
       food: food,
