@@ -30,7 +30,7 @@ exports.signup = async (req, res, next) => {
     const newUser = await user.save();
     const token = jwt.sign(
       {
-        userId: user._id.toString(),
+        userId: newUser._id.toString(),
       },
       'secret'
     );
