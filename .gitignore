@@ -1,4 +1,10 @@
 /node_modules
 npm-debug.log
 .DS_Store
+<<<<<<< HEAD
 /*.env
+=======
+/*.env
+server.key
+server.cert
+>>>>>>> master

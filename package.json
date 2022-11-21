@@ -2,13 +2,25 @@
   "name": "restaurant-uit-server",
   "version": "1.0.0",
   "main": "index.js",
+<<<<<<< HEAD
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js"
+=======
+  "engines": {
+    "node": "16.15.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "NODE_ENV=production MONGO_USER=admin MONGO_PASSWORD=admin MONGO_DEFAULT_DATABASE=restaurant?retryWrites=true&w=majority node app.js",
+    "start-server": "node app.js",
+    "start:dev": "nodemon app.js"
+>>>>>>> master
   },
   "author": "tranvuongduy2003",
   "license": "ISC",
   "description": "",
+<<<<<<< HEAD
   "engines": {
     "node": "16.x"
   },
@@ -19,6 +31,22 @@
     "express-validator": "^6.14.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.5",
+=======
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.1",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-validator": "^6.14.2",
+    "googleapis": "^108.0.0",
+    "helmet": "^6.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.6.5",
+    "morgan": "^1.10.0",
+>>>>>>> master
     "multer": "^1.4.5-lts.1",
     "uuid": "^9.0.0"
   },

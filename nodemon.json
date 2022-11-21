@@ -1,0 +1,12 @@
+{
+  "env": {
+    "MONGO_USER": "admin",
+    "MONGO_PASSWORD": "admin",
+    "MONGO_DEFAULT_DATABASE": "restaurant?retryWrites=true&w=majority",
+    "PORT": 8080,
+    "CLIENT_ID": "373687491066-r0ugek75dgnnj5s8a9ndam3cqhdj1qdc.apps.googleusercontent.com",
+    "CLIENT_SECRET": "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",
+    "REDIRECT_URI": "https://developers.google.com/oauthplayground",
+    "REFRESH_TOKEN": "1//04D4vLN4G3abJCgYIARAAGAQSNgF-L9Ir94KUSaD2Z7uDtoZsOzkCiPMw0kGHnWKAZsF-qc6g1hWLmKbhS-qHxnMEJO8a9smKHg"
+  }
+}
