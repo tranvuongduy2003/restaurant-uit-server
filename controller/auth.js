@@ -34,9 +34,10 @@ exports.signup = async (req, res, next) => {
       },
       'secret'
     );
+    res.cookie('user', newUser, { httpOnly: true });
     res
-      .status(httpStatus.CREATED)
-      .json({ message: 'User created!', token: token, user: newUser });
+      .status(httpStatus.OK)
+      .json({ token: token, user: { id: newUser._id, role: newUser.role } });
   } catch (error) {
     if (!error) {
       error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
@@ -69,7 +70,10 @@ exports.login = async (req, res, next) => {
       },
       'secret'
     );
-    res.status(httpStatus.OK).json({ token: token, user: user });
+    res.cookie('user', user, { httpOnly: true });
+    res
+      .status(httpStatus.OK)
+      .json({ token: token, user: { id: user._id, role: user.role } });
   } catch (error) {
     if (!error) {
       error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;

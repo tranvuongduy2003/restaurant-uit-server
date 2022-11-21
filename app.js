@@ -9,11 +9,13 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const compression = require('compression');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 
 const authRouter = require('./router/auth');
 const adminRouter = require('./router/admin');
 const foodRouter = require('./router/food');
 const categoryRouter = require('./router/category');
+const cors = require('cors');
 
 const app = express();
 
@@ -23,9 +25,12 @@ const MONGODB_URL = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO
 // const certificate = fs.readFileSync('server.cert');
 
 app.use(bodyParser.json());
+// app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 
 app.use((req, res, next) => {
+  // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
   res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader(
     'Access-Control-Allow-Methods',
     'OPTIONS, GET, POST, PUT, PATCH, DELETE'
@@ -47,6 +52,7 @@ const accessLogStream = fs.createWriteStream(
 app.use(helmet());
 app.use(compression());
 app.use(morgan('combined', { stream: accessLogStream }));
+app.use(cookieParser());
 
 app.use((error, req, res, next) => {
   console.log(error);
