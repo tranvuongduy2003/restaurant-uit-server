@@ -10,6 +10,7 @@ const helmet = require('helmet');
 const compression = require('compression');
 const morgan = require('morgan');
 
+const authRouter = require('./router/auth');
 const adminRouter = require('./router/admin');
 const foodRouter = require('./router/food');
 const categoryRouter = require('./router/category');
@@ -33,6 +34,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/auth', authRouter);
 app.use('/admin', adminRouter);
 app.use('/food', foodRouter);
 app.use('/category', categoryRouter);

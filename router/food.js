@@ -1,19 +1,16 @@
 const express = require('express');
 
 const foodController = require('../controller/food');
+const isAuth = require('../middleware/is-auth');
 
 const router = express.Router();
 
-router.get('/', foodController.getFoods);
+router.get('/', isAuth, foodController.getFoods);
 
-router.get('/best-deals', foodController.getBestDeals);
+router.get('/best-deals', isAuth, foodController.getBestDeals);
 
-router.get('/popular', foodController.getPopular);
+router.get('/popular', isAuth, foodController.getPopular);
 
-router.get('/:foodId', foodController.getFood);
-
-router.put('/:foodId', foodController.updateFood);
-
-router.delete('/:foodId', foodController.deleteFood);
+router.get('/:foodId', isAuth, foodController.getFood);
 
 module.exports = router;
