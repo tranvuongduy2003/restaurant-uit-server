@@ -8,12 +8,6 @@ const categorySchema = new Schema(
       type: String,
       required: true,
     },
-<<<<<<< HEAD
-    products: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Product',
-=======
     image: {
       type: String,
       required: true,
@@ -29,16 +23,12 @@ const categorySchema = new Schema(
       {
         type: Schema.Types.ObjectId,
         ref: 'Food',
->>>>>>> master
       },
     ],
   },
   { timestamps: true }
 );
 
-<<<<<<< HEAD
-=======
 categorySchema.index({ name: 'text' });
 
->>>>>>> master
 module.exports = mongoose.model('Category', categorySchema);

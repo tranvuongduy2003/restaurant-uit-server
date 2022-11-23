@@ -1,9 +1,6 @@
 const path = require('path');
-<<<<<<< HEAD
-=======
 const fs = require('fs');
 const https = require('https');
->>>>>>> master
 
 const express = require('express');
 const mongooes = require('mongoose');
