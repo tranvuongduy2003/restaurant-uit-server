@@ -1,4 +1,5 @@
 const Food = require('../models/food');
+const DeletedFood = require('../models/deleted-food');
 const Category = require('../models/category');
 const { httpStatus } = require('../utils/httpStatus');
 
@@ -24,6 +25,39 @@ exports.getFoods = async (req, res, next) => {
     }
     res.status(httpStatus.OK).json({
       message: 'Fetched foods successfully',
+      foods: foods,
+      totalItems: totalItems,
+    });
+  } catch (error) {
+    if (!error) {
+      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
+    }
+    next(error);
+  }
+};
+
+exports.getDeletedFoods = async (req, res, next) => {
+  try {
+    let foods = [];
+    let foodParams = {};
+    if (req.query.category) {
+      foodParams = { ...foodParams, categoryId: req.query.category };
+    }
+    if (req.query.search) {
+      foodParams = { ...foodParams, $text: { $search: req.query.search } };
+    }
+    const totalItems = await DeletedFood.find(foodParams).countDocuments();
+    if (req.query.page) {
+      const currentPage = req.query.page;
+      const perPage = 5;
+      foods = await DeletedFood.find(foodParams)
+        .skip((currentPage - 1) * perPage)
+        .limit(perPage);
+    } else {
+      foods = await DeletedFood.find(foodParams);
+    }
+    res.status(httpStatus.OK).json({
+      message: 'Fetched deleted foods successfully',
       foods: foods,
       totalItems: totalItems,
     });

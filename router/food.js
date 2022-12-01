@@ -7,6 +7,8 @@ const router = express.Router();
 
 router.get('/', isAuth, foodController.getFoods);
 
+router.get('/deleted', isAuth, foodController.getDeletedFoods);
+
 router.get('/best-deals', isAuth, foodController.getBestDeals);
 
 router.get('/popular', isAuth, foodController.getPopular);

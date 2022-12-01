@@ -1,5 +1,7 @@
 const Food = require('../models/food');
+const DeletedFood = require('../models/deleted-food');
 const Category = require('../models/category');
+const DeletedCategory = require('../models/deleted-category');
 const User = require('../models/user');
 const { httpStatus } = require('../utils/httpStatus');
 
@@ -103,10 +105,25 @@ exports.deleteFood = async (req, res, next) => {
   try {
     const foodId = req.params.foodId;
     const food = await Food.findByIdAndRemove(foodId);
-    const category = await Category.findById(food.categoryId);
-    const foodIndex = category.foods.findIndex((item) => item._id === food._id);
-    category.foods.splice(foodIndex, 1);
-    await category.save();
+    const deletedFood = new DeletedFood({
+      name: food.name,
+      categoryId: food.categoryId || '',
+      price: food.price,
+      images: food.images,
+      posterImage: food.posterImage,
+      description: food.description,
+      bestDeals: food.bestDeals,
+      popular: food.popular,
+    });
+    if (deletedFood.categoryId !== '') {
+      const category = await Category.findById(food.categoryId);
+      const foodIndex = category?.foods.findIndex(
+        (item) => item._id === food._id
+      );
+      category?.foods.splice(foodIndex, 1);
+      await category?.save();
+    }
+    await deletedFood.save();
     res.status(httpStatus.OK).json({
       message: 'Delete food successfully',
       food: food,
@@ -144,7 +161,27 @@ exports.updateCategory = async (req, res, next) => {
 exports.deleteCategory = async (req, res, next) => {
   try {
     const categoryId = req.params.categoryId;
-    const category = await Category.findByIdAndRemove(categoryId);
+    const category = await Category.findById(categoryId);
+    // const foods = await Food.find({ categoryId: category._id });
+    // foods.map((food) => ({ ...food, categoryId: '' }));
+    // await foods.save();
+    Food.updateMany(
+      { categoryId: category._id },
+      {
+        $set: {
+          categoryId: '',
+        },
+      }
+    );
+    const deletedCategory = new DeletedCategory({
+      name: category.name,
+      image: category.image,
+      imageRef: category.imageRef,
+      popular: category.popular,
+      foods: category.foods,
+    });
+    await deletedCategory.save();
+    await category.remove();
     res.status(httpStatus.OK).json({
       message: 'Delete category successfully',
       category: category,
