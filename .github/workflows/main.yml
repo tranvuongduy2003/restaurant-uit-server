@@ -26,4 +26,4 @@ jobs:
           node-version: 'latest'
           cache: 'npm'
       - run: npm install
-      - run: npm run start:dev
+      - run: npm start
