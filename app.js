@@ -10,12 +10,15 @@ const helmet = require('helmet');
 const compression = require('compression');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
+const dotenv = require('dotenv');
 
 const authRouter = require('./router/auth');
 const adminRouter = require('./router/admin');
 const foodRouter = require('./router/food');
 const categoryRouter = require('./router/category');
-const cors = require('cors');
+
+dotenv.config();
 
 const app = express();
 

@@ -1,12 +1,10 @@
-const jwt = require('jsonwebtoken');
 const { httpStatus } = require('../utils/httpStatus');
-const role = require('../utils/role');
-
-const User = require('../models/user');
 
 module.exports = async (req, res, next) => {
   const user = req.user;
-  if (user && user.role === role.ADMIN) {
+  const userId = req.params.id;
+  if (user && userId && user.id === userId) {
+    req.userId = userId;
     next();
   } else {
     const error = new Error('Bạn không có quyền truy cập tính năng này');
