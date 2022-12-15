@@ -5,12 +5,12 @@ const isAuth = require('../middleware/is-auth');
 
 const router = express.Router();
 
-router.get('/', isAuth, categoryController.getCategories);
+router.get('/', categoryController.getCategories);
 
 router.get('/deleted', isAuth, categoryController.getDeletedCategories);
 
-router.get('/popular', isAuth, categoryController.getPopular);
+router.get('/popular', categoryController.getPopular);
 
-router.get('/:categoryId', isAuth, categoryController.getCategory);
+router.get('/:categoryId', categoryController.getCategory);
 
 module.exports = router;

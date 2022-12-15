@@ -51,3 +51,6 @@
 ::1 - - [12/Dec/2022:08:32:45 +0000] "GET /auth/user/6375a74115423d5d1c1b160c HTTP/1.1" 404 173 "-" "PostmanRuntime/7.29.2"
 ::1 - - [12/Dec/2022:09:12:45 +0000] "OPTIONS /auth/logout/63595e22c0c93fb55dc99be1 HTTP/1.1" 404 179 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
 ::1 - - [14/Dec/2022:02:43:22 +0000] "POST /food HTTP/1.1" 404 144 "-" "PostmanRuntime/7.29.2"
+::ffff:127.0.0.1 - - [15/Dec/2022:08:00:38 +0000] "GET /auth/login HTTP/1.1" 404 149 "-" "PostmanRuntime/7.30.0"
+::ffff:127.0.0.1 - - [15/Dec/2022:08:21:17 +0000] "POST /food/deleted HTTP/1.1" 404 152 "-" "PostmanRuntime/7.30.0"
+::1 - - [15/Dec/2022:08:23:31 +0000] "GET / HTTP/1.1" 404 139 "-" "PostmanRuntime/7.30.0"

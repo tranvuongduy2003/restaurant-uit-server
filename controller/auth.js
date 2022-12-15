@@ -103,7 +103,7 @@ exports.login = async (req, res, next) => {
     if (!isPasswordValid) {
       const error = new Error();
       error.message = 'Sai mật khẩu';
-      error.statusCode = httpStatus.UNAUTHORIZED;
+      error.statusCode = httpStatus.FORBIDDEN;
       throw error;
     }
 
@@ -120,7 +120,6 @@ exports.login = async (req, res, next) => {
       refreshToken = user.refreshToken;
     }
 
-    res.cookie('user', user, { httpOnly: true });
     res.status(httpStatus.OK).json({
       accessToken: accessToken,
       refreshToken: refreshToken,
