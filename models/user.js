@@ -4,6 +4,16 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
   {
+    avatar: {
+      ref: {
+        type: String,
+        required: true,
+      },
+      url: {
+        type: String,
+        required: true,
+      },
+    },
     email: {
       type: String,
       required: true,
@@ -19,6 +29,10 @@ const userSchema = new Schema(
     phoneNumber: {
       type: Number,
       required: true,
+    },
+    address: {
+      type: String,
+      required: false,
     },
     role: {
       type: String,

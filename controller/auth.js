@@ -235,3 +235,33 @@ exports.getUser = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.editUser = async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const avatar = req.body.avatar;
+    const name = req.body.name;
+    const email = req.body.email;
+    const phoneNumber = req.body.phoneNumber;
+    const address = req.body.address;
+
+    const user = await User.findOne({ _id: userId });
+    user.avatar = avatar;
+    user.name = name;
+    user.email = email;
+    user.phoneNumber = phoneNumber;
+    user.address = address;
+
+    const newUser = await user.save();
+
+    res.status(httpStatus.OK).json({
+      message: 'Update user successfully',
+      user: newUser,
+    });
+  } catch (error) {
+    if (!error) {
+      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
+    }
+    next(error);
+  }
+};
