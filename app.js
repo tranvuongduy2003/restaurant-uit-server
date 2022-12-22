@@ -27,6 +27,8 @@ const MONGODB_URL = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO
 // const privateKey = fs.readFileSync('server.key');
 // const certificate = fs.readFileSync('server.cert');
 
+app.use(cors());
+
 app.use(bodyParser.json());
 // app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 

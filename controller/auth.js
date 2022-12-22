@@ -136,6 +136,7 @@ exports.login = async (req, res, next) => {
 exports.refreshToken = async (req, res, next) => {
   try {
     const authHeader = req.get('Authorization');
+
     if (!authHeader) {
       const error = new Error('Không tìm thấy access token!');
       error.statusCode = httpStatus.FORBIDDEN;
@@ -154,7 +155,7 @@ exports.refreshToken = async (req, res, next) => {
     const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET || 'secret';
     const accessTokenLife = process.env.ACCESS_TOKEN_LIFE || '1m';
 
-    const decoded = await jwt.verify(accessTokenFromHeader, 'secret');
+    const decoded = await jwt.decode(accessTokenFromHeader, 'secret');
     if (!decoded) {
       const error = new Error();
       error.statusCode = httpStatus.UNAUTHORIZED;
