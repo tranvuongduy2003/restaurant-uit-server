@@ -3,7 +3,6 @@ const fs = require('fs');
 const https = require('https');
 
 const express = require('express');
-const mongooes = require('mongoose');
 const { default: mongoose } = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');

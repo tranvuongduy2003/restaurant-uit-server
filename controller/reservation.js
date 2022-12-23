@@ -1,6 +1,6 @@
 const Reservation = require('../models/reservation');
-const status = require('../utils/status');
-const httpStatus = require('../utils/httpStatus');
+const { httpStatus } = require('../utils/httpStatus');
+const { status } = require('../utils/status');
 
 exports.reservate = async (req, res, next) => {
   try {
@@ -11,18 +11,19 @@ exports.reservate = async (req, res, next) => {
     const bookingTime = req.body.bookingTime;
     const quantity = req.body.quantity;
 
-    const reservation = new Reservation();
-    reservation.userId = userId;
-    reservation.name = name;
-    reservation.phoneNumber = phoneNumber;
-    reservation.bookingDate = bookingDate;
-    reservation.bookingTime = bookingTime;
-    reservation.quantity = quantity;
-    reservation.status = status.PENDING;
+    const reservation = new Reservation({
+      userId,
+      name,
+      phoneNumber,
+      bookingDate,
+      bookingTime,
+      quantity,
+      status: status.PENDING,
+    });
 
     await reservation.save();
 
-    res.status(httpStatus.OK).json({
+    res.status(httpStatus.CREATED).json({
       message: 'Reservate successfully!',
       reservation: reservation,
     });
