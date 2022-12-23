@@ -136,6 +136,22 @@ exports.deleteFood = async (req, res, next) => {
   }
 };
 
+exports.deleteFoodPermanently = async (req, res, next) => {
+  try {
+    const foodId = req.params.foodId;
+    const food = await DeletedFood.findByIdAndRemove(foodId);
+    res.status(httpStatus.OK).json({
+      message: 'Delete food permanently',
+      food: food,
+    });
+  } catch (error) {
+    if (!error) {
+      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
+    }
+    next(error);
+  }
+};
+
 exports.updateCategory = async (req, res, next) => {
   try {
     const categoryId = req.params.categoryId;
@@ -194,6 +210,22 @@ exports.deleteCategory = async (req, res, next) => {
   }
 };
 
+exports.deleteCategoryPermanently = async (req, res, next) => {
+  try {
+    const categoryId = req.params.categoryId;
+    const category = await DeletedCategory.findByIdAndRemove(categoryId);
+    res.status(httpStatus.OK).json({
+      message: 'Delete category permanently',
+      category: category,
+    });
+  } catch (error) {
+    if (!error) {
+      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
+    }
+    next(error);
+  }
+};
+
 exports.getUsers = async (req, res, next) => {
   try {
     let users = [];
@@ -218,6 +250,38 @@ exports.getUsers = async (req, res, next) => {
       message: 'Fetched users successfully',
       users: users,
       totalItems: totalItems,
+    });
+  } catch (error) {
+    if (!error) {
+      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
+    }
+    next(error);
+  }
+};
+
+exports.editUser = async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const avatar = req.body.avatar;
+    const name = req.body.name;
+    const email = req.body.email;
+    const phoneNumber = req.body.phoneNumber;
+    const address = req.body.address;
+    const role = req.body.role;
+
+    const user = await User.findOne({ _id: userId });
+    user.avatar = avatar;
+    user.name = name;
+    user.email = email;
+    user.phoneNumber = phoneNumber;
+    user.address = address;
+    user.role = role;
+
+    const newUser = await user.save();
+
+    res.status(httpStatus.OK).json({
+      message: 'Update user successfully',
+      user: newUser,
     });
   } catch (error) {
     if (!error) {

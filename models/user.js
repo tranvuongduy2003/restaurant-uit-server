@@ -44,11 +44,11 @@ const userSchema = new Schema(
           foodId: {
             type: Schema.Types.ObjectId,
             ref: 'Food',
-            required: true,
+            // required: true,
           },
           quantity: {
             type: Number,
-            required: true,
+            // required: true,
           },
         },
       ],

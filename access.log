@@ -65,3 +65,5 @@
 ::ffff:127.0.0.1 - - [22/Dec/2022:08:43:42 +0000] "GET /main.43030b1782db2e5b013d.hot-update.json HTTP/1.1" 404 180 "http://localhost:3000/user" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
 ::1 - - [22/Dec/2022:08:52:42 +0000] "GET /auth/refresh HTTP/1.1" 404 151 "-" "PostmanRuntime/7.30.0"
 ::1 - - [22/Dec/2022:12:36:55 +0000] "GET /auth/user HTTP/1.1" 404 148 "-" "PostmanRuntime/7.30.0"
+::ffff:127.0.0.1 - - [23/Dec/2022:02:34:11 +0000] "GET /main.7f2d0bc4bea06ac19391.hot-update.json HTTP/1.1" 404 180 "http://localhost:3000/user" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+::ffff:127.0.0.1 - - [23/Dec/2022:03:54:49 +0000] "GET /main.c38a91e6ebf0aa6bcea5.hot-update.json HTTP/1.1" 404 180 "http://localhost:3000/user" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"

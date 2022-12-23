@@ -17,6 +17,7 @@ const authRouter = require('./router/auth');
 const adminRouter = require('./router/admin');
 const foodRouter = require('./router/food');
 const categoryRouter = require('./router/category');
+const reservationRouter = require('./router/reservation');
 
 dotenv.config();
 
@@ -48,6 +49,7 @@ app.use('/auth', authRouter);
 app.use('/admin', adminRouter);
 app.use('/food', foodRouter);
 app.use('/category', categoryRouter);
+app.use('/reservation', reservationRouter);
 
 const accessLogStream = fs.createWriteStream(
   path.join(__dirname, 'access.log'),
