@@ -3,6 +3,7 @@ const DeletedFood = require('../models/deleted-food');
 const Category = require('../models/category');
 const DeletedCategory = require('../models/deleted-category');
 const User = require('../models/user');
+const DeletedUser = require('../models/deleted-user');
 const { httpStatus } = require('../utils/httpStatus');
 
 exports.postCreateFood = async (req, res, next) => {
@@ -282,6 +283,82 @@ exports.editUser = async (req, res, next) => {
     res.status(httpStatus.OK).json({
       message: 'Update user successfully',
       user: newUser,
+    });
+  } catch (error) {
+    if (!error) {
+      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
+    }
+    next(error);
+  }
+};
+
+exports.deleteUser = async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const user = await User.findByIdAndRemove(userId);
+    const deletedUser = new DeletedUser({
+      avatar: user.avatar,
+      email: user.email,
+      password: user.password,
+      name: user.name,
+      phoneNumber: user.phoneNumber,
+      address: user.address,
+      role: user.role,
+      cart: user.cart,
+    });
+    await deletedUser.save();
+    res.status(httpStatus.OK).json({
+      message: 'Delete user successfully',
+      user: user,
+    });
+  } catch (error) {
+    if (!error) {
+      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
+    }
+    next(error);
+  }
+};
+
+exports.deleteUserPermanently = async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const user = await DeletedUser.findByIdAndRemove(userId);
+    res.status(httpStatus.OK).json({
+      message: 'Delete user permanently',
+      user: user,
+    });
+  } catch (error) {
+    if (!error) {
+      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
+    }
+    next(error);
+  }
+};
+
+exports.getDeletedUser = async (req, res, next) => {
+  try {
+    let users = [];
+    let userParams = {};
+    if (req.query.search) {
+      userParams = {
+        ...userParams,
+        $text: { $search: req.query.search },
+      };
+    }
+    const totalItems = await DeletedUser.find(userParams).countDocuments();
+    if (req.query.page) {
+      const currentPage = req.query.page;
+      const perPage = 5;
+      users = await DeletedUser.find(userParams)
+        .skip((currentPage - 1) * perPage)
+        .limit(perPage);
+    } else {
+      users = await DeletedUser.find(userParams);
+    }
+    res.status(httpStatus.OK).json({
+      message: 'Fetched users successfully',
+      users: users,
+      totalItems: totalItems,
     });
   } catch (error) {
     if (!error) {

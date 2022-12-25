@@ -2,16 +2,16 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema(
+const deletedUserSchema = new Schema(
   {
     avatar: {
       ref: {
         type: String,
-        required: true,
+        required: false,
       },
       url: {
         type: String,
-        required: true,
+        required: false,
       },
     },
     email: {
@@ -38,30 +38,10 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    cart: {
-      // items: [
-      //   {
-      //     foodId: {
-      //       type: Schema.Types.ObjectId,
-      //       ref: 'Food',
-      //       required: false,
-      //     },
-      //     quantity: {
-      //       type: Number,
-      //       required: false,
-      //     },
-      //     required: false,
-      //   },
-      // ],
-    },
-    refreshToken: {
-      type: String,
-      required: false,
-    },
   },
   { timestamps: true }
 );
 
-userSchema.index({ name: 'text' });
+deletedUserSchema.index({ name: 'text' });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('DeletedUser', deletedUserSchema);

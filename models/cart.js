@@ -8,18 +8,18 @@ const cartSchema = new Schema(
       {
         food: {
           type: Object,
-          required: true,
+          required: false,
         },
         quantity: {
           type: Number,
-          required: true,
+          required: false,
         },
       },
     ],
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
+      required: false,
     },
   },
   { timestamps: true }

@@ -8,7 +8,18 @@ const router = express.Router();
 
 router.get('/user', isAuth, isAdmin, adminController.getUsers);
 
-router.post('/user/:id', isAuth, isAdmin, adminController.editUser);
+router.get('/user/bin', isAuth, isAdmin, adminController.getDeletedUser);
+
+router.delete(
+  '/user/bin/:id',
+  isAuth,
+  isAdmin,
+  adminController.deleteUserPermanently
+);
+
+router.put('/user/:id', isAuth, isAdmin, adminController.editUser);
+
+router.delete('/user/:id', isAuth, isAdmin, adminController.deleteUser);
 
 router.post('/food', isAuth, isAdmin, adminController.postCreateFood);
 

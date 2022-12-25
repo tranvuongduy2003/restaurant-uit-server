@@ -35,4 +35,6 @@ const reservationSchema = new Schema(
   { timestamps: true }
 );
 
+reservationSchema.index({ name: 'text' });
+
 module.exports = mongoose.model('Reservation', reservationSchema);
