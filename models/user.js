@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const Food = require('./food');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
@@ -7,11 +7,11 @@ const userSchema = new Schema(
     avatar: {
       ref: {
         type: String,
-        required: true,
+        required: false,
       },
       url: {
         type: String,
-        required: true,
+        required: false,
       },
     },
     email: {
@@ -39,20 +39,29 @@ const userSchema = new Schema(
       required: true,
     },
     cart: {
-      // items: [
-      //   {
-      //     foodId: {
-      //       type: Schema.Types.ObjectId,
-      //       ref: 'Food',
-      //       required: false,
-      //     },
-      //     quantity: {
-      //       type: Number,
-      //       required: false,
-      //     },
-      //     required: false,
-      //   },
-      // ],
+      items: [
+        {
+          id: {
+            type: Schema.Types.ObjectId,
+            ref: 'Category',
+          },
+          name: {
+            type: String,
+          },
+          price: {
+            type: Number,
+          },
+          imgUrl: {
+            type: String,
+          },
+          qty: {
+            type: Number,
+          },
+        },
+      ],
+      totalPrice: {
+        type: Number,
+      },
     },
     refreshToken: {
       type: String,
