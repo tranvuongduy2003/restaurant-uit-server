@@ -39,6 +39,9 @@ exports.getAllReservation = async (req, res, next) => {
   try {
     let reservations = [];
     let reservationParams = {};
+    if (req.query.status) {
+      reservationParams = { ...reservationParams, status: req.query.status };
+    }
     if (req.query.search) {
       reservationParams = {
         ...reservationParams,

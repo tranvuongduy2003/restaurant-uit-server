@@ -63,7 +63,12 @@ exports.signup = async (req, res, next) => {
       password: hashedPassword,
       name: name,
       phoneNumber: phoneNumber,
+      address: '',
       role: role.USER,
+      avatar: {
+        ref: '',
+        url: '',
+      },
     };
     const newUser = await createUser(userData);
     if (!newUser) {
@@ -72,14 +77,20 @@ exports.signup = async (req, res, next) => {
       error.message = 'Tạo người dùng thất bại!';
       throw error;
     }
-    const token = jwt.sign(
-      {
-        email: email,
-      },
-      'secret'
-    );
-    res.cookie('user', newUser, { httpOnly: true });
-    res.status(httpStatus.OK).json({ token: token, user: newUser });
+    const accessToken = await generateToken({ email: email }, 'secret', '1m');
+
+    if (!accessToken) {
+      throw new Error();
+    }
+
+    let refreshToken = randToken.generate(accessToken.length);
+    await updateRefreshToken(newUser.email, refreshToken);
+
+    res.status(httpStatus.OK).json({
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+      userId: newUser._id,
+    });
   } catch (error) {
     if (!error) {
       error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
