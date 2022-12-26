@@ -1,5 +1,7 @@
 const User = require('../models/user');
+const Order = require('../models/order');
 const { httpStatus } = require('../utils/httpStatus');
+const { status } = require('../utils/status');
 
 exports.getUser = async (req, res, next) => {
   try {
@@ -46,6 +48,54 @@ exports.editUser = async (req, res, next) => {
     res.status(httpStatus.OK).json({
       message: 'Update user successfully',
       user: newUser,
+    });
+  } catch (error) {
+    if (!error) {
+      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
+    }
+    next(error);
+  }
+};
+
+exports.pay = async (req, res, next) => {
+  try {
+    const userId = req.body.userId;
+    const name = req.body.name;
+    const phoneNumber = req.body.phoneNumber;
+    const address = req.body.address;
+    const desc = req.body.desc;
+    const method = req.body.method;
+    const items = req.body.items;
+
+    let totalPrice = 0;
+    items?.forEach((item) => {
+      totalPrice = item.qty * item.price + totalPrice;
+    });
+
+    const itemIds = items.map((item) => item.id);
+
+    const user = await User.findOne({ _id: userId });
+    user.cart = { items: [], totalPrice: 0 };
+
+    await user.save();
+
+    const order = new Order({
+      userId: userId,
+      name: name,
+      phoneNumber: phoneNumber,
+      address: address,
+      desc: desc,
+      method: method,
+      items: itemIds,
+      totalPrice: totalPrice,
+      status: status.PENDING,
+    });
+
+    await order.save();
+
+    res.status(httpStatus.OK).json({
+      message: 'Order foods successfully',
+      order: order,
     });
   } catch (error) {
     if (!error) {

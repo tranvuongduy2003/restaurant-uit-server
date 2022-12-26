@@ -6,6 +6,8 @@ const isAuth = require('../middleware/is-auth');
 
 const router = express.Router();
 
+router.post('/:id/pay', isAuth, isUser, userController.pay);
+
 router.get('/:id', isAuth, isUser, userController.getUser);
 
 router.put('/:id', isAuth, isUser, userController.editUser);
