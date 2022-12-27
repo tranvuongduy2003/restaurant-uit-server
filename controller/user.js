@@ -72,8 +72,6 @@ exports.pay = async (req, res, next) => {
       totalPrice = item.qty * item.price + totalPrice;
     });
 
-    const itemIds = items.map((item) => item.id);
-
     const user = await User.findOne({ _id: userId });
     user.cart = { items: [], totalPrice: 0 };
 
@@ -86,7 +84,7 @@ exports.pay = async (req, res, next) => {
       address: address,
       desc: desc,
       method: method,
-      items: itemIds,
+      items: items || [],
       totalPrice: totalPrice,
       status: status.PENDING,
     });

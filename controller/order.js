@@ -35,6 +35,57 @@ exports.getAllOrders = async (req, res, next) => {
   }
 };
 
+exports.deleteOrder = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const order = await Order.findByIdAndDelete(id);
+    res.status(httpStatus.OK).json({
+      message: 'Deleted order successfully',
+      order: order,
+    });
+  } catch (error) {
+    if (!error) {
+      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
+    }
+    next(error);
+  }
+};
+
+exports.updateOrder = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const userId = req.body.userId;
+    const name = req.body.name;
+    const phoneNumber = req.body.phoneNumber;
+    const address = req.body.address;
+    const desc = req.body.desc;
+    const method = req.body.method;
+    const items = req.body.items;
+
+    const order = await Order.findOne({ _id: id });
+
+    if (userId) order.userId = userId;
+    if (name) order.name = name;
+    if (phoneNumber) order.phoneNumber = phoneNumber;
+    if (address) order.address = address;
+    if (desc) order.desc = desc;
+    if (method) order.method = method;
+    if (items) order.items = items;
+
+    const newOrder = await order.save();
+
+    res.status(httpStatus.OK).json({
+      message: 'Updated order successfully',
+      order: newOrder,
+    });
+  } catch (error) {
+    if (!error) {
+      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
+    }
+    next(error);
+  }
+};
+
 exports.getAllOrdersById = async (req, res, next) => {
   try {
     const id = req.params.id;

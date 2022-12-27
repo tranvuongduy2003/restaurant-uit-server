@@ -10,6 +10,7 @@ exports.reservate = async (req, res, next) => {
     const bookingDate = req.body.bookingDate;
     const bookingTime = req.body.bookingTime;
     const quantity = req.body.quantity;
+    const desc = req.body.desc || '';
 
     const reservation = new Reservation({
       userId,
@@ -19,6 +20,7 @@ exports.reservate = async (req, res, next) => {
       bookingTime,
       quantity,
       status: status.PENDING,
+      desc,
     });
 
     await reservation.save();

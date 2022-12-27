@@ -31,6 +31,10 @@ const reservationSchema = new Schema(
       type: String,
       required: false,
     },
+    desc: {
+      type: String,
+      required: false,
+    },
   },
   { timestamps: true }
 );
