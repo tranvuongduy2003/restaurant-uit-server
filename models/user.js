@@ -44,24 +44,32 @@ const userSchema = new Schema(
           id: {
             type: Schema.Types.ObjectId,
             ref: 'Category',
+            require: false,
           },
           name: {
             type: String,
+            require: false,
           },
           price: {
             type: Number,
+            require: false,
           },
           imgUrl: {
             type: String,
+            require: false,
           },
           qty: {
             type: Number,
+            require: false,
           },
+          require: false,
         },
       ],
       totalPrice: {
         type: Number,
+        require: false,
       },
+      required: false,
     },
     refreshToken: {
       type: String,
