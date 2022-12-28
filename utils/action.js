@@ -1,5 +1,5 @@
 module.exports.action = {
-  REJECTED: 'rejected',
+  CANCLE: 'cancle',
   HANDLING: 'handling',
   PREPARING: 'preparing',
   DELIVERING: 'delivering',
