@@ -1,5 +1,5 @@
 module.exports.action = {
-  CANCLE: 'cancle',
+  CANCEL: 'cancel',
   HANDLING: 'handling',
   PREPARING: 'preparing',
   DELIVERING: 'delivering',
