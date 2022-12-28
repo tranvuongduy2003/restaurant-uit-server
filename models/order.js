@@ -35,7 +35,7 @@ const orderSchema = new Schema(
       {
         type: Schema.Types.ObjectId,
         ref: 'Food',
-        required: true,
+        required: false,
       },
     ],
     totalPrice: {

@@ -21,11 +21,15 @@ router.put('/user/:id', isAuth, isAdmin, adminController.editUser);
 
 router.delete('/user/:id', isAuth, isAdmin, adminController.deleteUser);
 
+router.post('/user/:id', isAuth, isAdmin, adminController.recoverUser);
+
 router.post('/food', isAuth, isAdmin, adminController.postCreateFood);
 
 router.put('/food/:foodId', isAuth, isAdmin, adminController.updateFood);
 
 router.delete('/food/:foodId', isAuth, isAdmin, adminController.deleteFood);
+
+router.post('/food/:id', isAuth, isAdmin, adminController.recoverFood);
 
 router.delete(
   '/food/bin/:foodId',
@@ -35,6 +39,8 @@ router.delete(
 );
 
 router.post('/category', isAuth, isAdmin, adminController.postCreateCategory);
+
+router.post('/category/:id', isAuth, isAdmin, adminController.recoverCategory);
 
 router.put(
   '/category/:categoryId',

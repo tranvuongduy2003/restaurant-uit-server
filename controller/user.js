@@ -2,6 +2,7 @@ const User = require('../models/user');
 const Order = require('../models/order');
 const { httpStatus } = require('../utils/httpStatus');
 const { status } = require('../utils/status');
+const { action } = require('../utils/action');
 
 exports.getUser = async (req, res, next) => {
   try {
@@ -87,6 +88,7 @@ exports.pay = async (req, res, next) => {
       items: items || [],
       totalPrice: totalPrice,
       status: status.PENDING,
+      action: action.HANDLING,
     });
 
     await order.save();

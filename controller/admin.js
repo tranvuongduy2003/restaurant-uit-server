@@ -42,33 +42,6 @@ exports.postCreateFood = async (req, res, next) => {
   }
 };
 
-exports.postCreateCategory = async (req, res, next) => {
-  try {
-    const name = req.body.name;
-    const image = req.body.image;
-    const imageRef = req.body.imageRef;
-    const popular = req.body.popular;
-    const foods = [];
-    const category = new Category({
-      name,
-      image,
-      imageRef,
-      popular,
-      foods,
-    });
-    await category.save();
-    res.status(httpStatus.CREATED).json({
-      message: 'Category created successfully',
-      category: category,
-    });
-  } catch (error) {
-    if (!error) {
-      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
-    }
-    next(error);
-  }
-};
-
 exports.updateFood = async (req, res, next) => {
   try {
     const foodId = req.params.foodId;
@@ -153,6 +126,70 @@ exports.deleteFoodPermanently = async (req, res, next) => {
   }
 };
 
+exports.recoverFood = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const deletedFood = await DeletedFood.findByIdAndRemove(id);
+
+    const categoryId = deletedFood.categoryId;
+    if (categoryId) {
+      const category = await Category.findOne({ _id: categoryId });
+      category.foods.push(deletedFood._id);
+      await category.save();
+    }
+
+    const recoverFood = new Food({
+      name: deletedFood.name,
+      categoryId: deletedFood.categoryId || '',
+      price: deletedFood.price,
+      images: deletedFood.images,
+      posterImage: deletedFood.posterImage,
+      description: deletedFood.description,
+      bestDeals: deletedFood.bestDeals,
+      popular: deletedFood.popular,
+    });
+
+    await recoverFood.save();
+
+    res.status(httpStatus.OK).json({
+      message: 'Recover food successfully',
+      food: recoverFood,
+    });
+  } catch (error) {
+    if (!error) {
+      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
+    }
+    next(error);
+  }
+};
+
+exports.postCreateCategory = async (req, res, next) => {
+  try {
+    const name = req.body.name;
+    const image = req.body.image;
+    const imageRef = req.body.imageRef;
+    const popular = req.body.popular;
+    const foods = [];
+    const category = new Category({
+      name,
+      image,
+      imageRef,
+      popular,
+      foods,
+    });
+    await category.save();
+    res.status(httpStatus.CREATED).json({
+      message: 'Category created successfully',
+      category: category,
+    });
+  } catch (error) {
+    if (!error) {
+      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
+    }
+    next(error);
+  }
+};
+
 exports.updateCategory = async (req, res, next) => {
   try {
     const categoryId = req.params.categoryId;
@@ -218,6 +255,33 @@ exports.deleteCategoryPermanently = async (req, res, next) => {
     res.status(httpStatus.OK).json({
       message: 'Delete category permanently',
       category: category,
+    });
+  } catch (error) {
+    if (!error) {
+      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
+    }
+    next(error);
+  }
+};
+
+exports.recoverCategory = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const deletedCategory = DeletedCategory.findByIdAndRemove(id);
+
+    const recoverCategory = new Category({
+      name: deletedCategory.name,
+      image: deletedCategory.image,
+      imageRef: deletedCategory.imageRef,
+      popular: deletedCategory.popular,
+      foods: deletedCategory.foods,
+    });
+
+    recoverCategory.save();
+
+    res.status(httpStatus.OK).json({
+      message: 'Recover category successfully',
+      category: recoverCategory,
     });
   } catch (error) {
     if (!error) {
@@ -359,6 +423,33 @@ exports.getDeletedUser = async (req, res, next) => {
       message: 'Fetched users successfully',
       users: users,
       totalItems: totalItems,
+    });
+  } catch (error) {
+    if (!error) {
+      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
+    }
+    next(error);
+  }
+};
+
+exports.recoverUser = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const deletedUser = await DeletedUser.findByIdAndRemove(id);
+    const recoverUser = new User({
+      avatar: deletedUser.avatar,
+      email: deletedUser.email,
+      password: deletedUser.password,
+      name: deletedUser.name,
+      phoneNumber: deletedUser.phoneNumber,
+      address: deletedUser.address,
+      role: deletedUser.role,
+      cart: deletedUser.cart,
+    });
+    await deletedUser.save();
+    res.status(httpStatus.OK).json({
+      message: 'Recover user successfully',
+      user: recoverUser,
     });
   } catch (error) {
     if (!error) {
