@@ -33,9 +33,28 @@ const orderSchema = new Schema(
     },
     items: [
       {
-        type: Schema.Types.ObjectId,
-        ref: 'Food',
-        required: false,
+        id: {
+          type: Schema.Types.ObjectId,
+          ref: 'Category',
+          require: false,
+        },
+        name: {
+          type: String,
+          require: false,
+        },
+        price: {
+          type: Number,
+          require: false,
+        },
+        imgUrl: {
+          type: String,
+          require: false,
+        },
+        qty: {
+          type: Number,
+          require: false,
+        },
+        require: false,
       },
     ],
     totalPrice: {
