@@ -13,6 +13,6 @@ router.delete('/:id', isAuth, isAdmin, orderController.deleteOrder);
 
 router.put('/:id', isAuth, isAdmin, orderController.updateOrder);
 
-router.get('/:id', isAuth, isUser, orderController.getAllOrdersById);
+router.get('/:userId', isAuth, isUser, orderController.getAllOrdersById);
 
 module.exports = router;

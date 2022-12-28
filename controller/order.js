@@ -88,9 +88,9 @@ exports.updateOrder = async (req, res, next) => {
 
 exports.getAllOrdersById = async (req, res, next) => {
   try {
-    const id = req.params.id;
-    const orders = await Order.find({ userId: id });
-    const totalItems = await Order.find({ userId: id }).countDocuments();
+    const userId = req.params.userId;
+    const orders = await Order.find({ userId: userId });
+    const totalItems = await Order.find({ userId: userId }).countDocuments();
     res.status(httpStatus.OK).json({
       message: 'Fetched orders successfully',
       orders: orders,
