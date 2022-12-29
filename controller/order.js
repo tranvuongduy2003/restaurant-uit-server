@@ -17,6 +17,7 @@ exports.getAllOrders = async (req, res, next) => {
       const currentPage = req.query.page;
       const perPage = 5;
       orders = await Order.find(orderParams)
+        .sort({ date: 'desc' })
         .skip((currentPage - 1) * perPage)
         .limit(perPage);
     } else {
