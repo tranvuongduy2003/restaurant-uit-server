@@ -61,6 +61,8 @@ exports.updateOrder = async (req, res, next) => {
     const desc = req.body.desc;
     const method = req.body.method;
     const items = req.body.items;
+    const action = req.body.action;
+    const status = req.body.status;
 
     const order = await Order.findOne({ _id: id });
 
@@ -71,6 +73,8 @@ exports.updateOrder = async (req, res, next) => {
     if (desc) order.desc = desc;
     if (method) order.method = method;
     if (items) order.items = items;
+    if (action) order.action = action;
+    if (status) order.status = status;
 
     const newOrder = await order.save();
 
