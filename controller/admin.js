@@ -1,4 +1,5 @@
 const Food = require('../models/food');
+const Role = require('../models/role');
 const DeletedFood = require('../models/deleted-food');
 const Category = require('../models/category');
 const DeletedCategory = require('../models/deleted-category');
@@ -450,6 +451,68 @@ exports.recoverUser = async (req, res, next) => {
     res.status(httpStatus.OK).json({
       message: 'Recover user successfully',
       user: recoverUser,
+    });
+  } catch (error) {
+    if (!error) {
+      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
+    }
+    next(error);
+  }
+};
+
+exports.getRoles = async (req, res, next) => {
+  try {
+    let roles = [];
+    let roleParams = {};
+    // if (req.query.search) {
+    //   roleParams = { ...roleParams, $text: { $search: req.query.search } };
+    // }
+    const totalItems = await Role.find(roleParams).countDocuments();
+    if (req.query.page) {
+      const currentPage = req.query.page;
+      const perPage = 5;
+      roles = await Role.find(roleParams)
+        .skip((currentPage - 1) * perPage)
+        .limit(perPage);
+    } else {
+      roles = await Role.find(roleParams);
+    }
+    res.status(httpStatus.OK).json({
+      message: 'Get all roles successfully',
+      roles: roles,
+      totalItems: totalItems,
+    });
+  } catch (error) {
+    if (!error) {
+      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
+    }
+    next(error);
+  }
+};
+
+exports.updateRole = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const name = req.body.name;
+    const read = req.body.read;
+    const edit = req.body.edit;
+    const add = req.body.add;
+    const roleDelete = req.body.delete;
+
+    const role = await Role.findOneAndUpdate(
+      { _id: id },
+      {
+        name: name,
+        read: read,
+        edit: edit,
+        add: add,
+        delete: roleDelete,
+      }
+    );
+
+    res.status(httpStatus.OK).json({
+      message: 'Update role successfully',
+      role: role,
     });
   } catch (error) {
     if (!error) {

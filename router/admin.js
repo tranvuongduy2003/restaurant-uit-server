@@ -63,4 +63,8 @@ router.delete(
   adminController.deleteCategoryPermanently
 );
 
+router.get('/roles', adminController.getRoles);
+
+router.put('/roles/:id', adminController.updateRole);
+
 module.exports = router;

@@ -7,6 +7,7 @@
     "CLIENT_ID": "373687491066-r0ugek75dgnnj5s8a9ndam3cqhdj1qdc.apps.googleusercontent.com",
     "CLIENT_SECRET": "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",
     "REDIRECT_URI": "https://developers.google.com/oauthplayground",
-    "REFRESH_TOKEN": "1//04D4vLN4G3abJCgYIARAAGAQSNgF-L9Ir94KUSaD2Z7uDtoZsOzkCiPMw0kGHnWKAZsF-qc6g1hWLmKbhS-qHxnMEJO8a9smKHg"
+    "REFRESH_TOKEN": "1//04D4vLN4G3abJCgYIARAAGAQSNgF-L9Ir94KUSaD2Z7uDtoZsOzkCiPMw0kGHnWKAZsF-qc6g1hWLmKbhS-qHxnMEJO8a9smKHg",
+    "NODEMAILER_API_KEY": "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"
   }
 }

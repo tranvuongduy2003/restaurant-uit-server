@@ -2,10 +2,15 @@ const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const randToken = require('rand-token');
+const sendgridMail = require('@sendgrid/mail');
 
 const User = require('../models/user');
 const { httpStatus } = require('../utils/httpStatus');
 const role = require('../utils/role');
+
+sendgridMail.setApiKey(
+  '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'
+);
 
 const createUser = async (userData) => {
   try {
@@ -137,6 +142,10 @@ exports.login = async (req, res, next) => {
       userId: user._id,
     });
   } catch (error) {
+    console.log(
+      '🚀 ~ file: auth.js:152 ~ exports.login= ~ error',
+      error.response.body.errors
+    );
     if (!error) {
       error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
     }

@@ -4,3 +4,4 @@ npm-debug.log
 /*.env
 server.key
 server.cert
+nodemon.json
