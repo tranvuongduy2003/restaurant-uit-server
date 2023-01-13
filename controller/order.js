@@ -4,6 +4,13 @@ const { httpStatus } = require('../utils/httpStatus');
 
 exports.getAllOrders = async (req, res, next) => {
   try {
+    const role = req.role;
+    if (!role || !role.read) {
+      const error = new Error('Bạn không có quyền truy cập chức năng này');
+      error.statusCode = httpStatus.FORBIDDEN;
+      throw error;
+    }
+
     let orders = [];
     let orderParams = {};
     if (req.query.status) {
@@ -38,6 +45,13 @@ exports.getAllOrders = async (req, res, next) => {
 
 exports.deleteOrder = async (req, res, next) => {
   try {
+    const role = req.role;
+    if (!role || !role.delete) {
+      const error = new Error('Bạn không có quyền truy cập chức năng này');
+      error.statusCode = httpStatus.FORBIDDEN;
+      throw error;
+    }
+
     const id = req.params.id;
     const order = await Order.findByIdAndDelete(id);
     res.status(httpStatus.OK).json({
@@ -54,6 +68,13 @@ exports.deleteOrder = async (req, res, next) => {
 
 exports.updateOrder = async (req, res, next) => {
   try {
+    const role = req.role;
+    if (!role || !role.edit) {
+      const error = new Error('Bạn không có quyền truy cập chức năng này');
+      error.statusCode = httpStatus.FORBIDDEN;
+      throw error;
+    }
+
     const id = req.params.id;
     const userId = req.body.userId;
     const name = req.body.name;
@@ -93,6 +114,13 @@ exports.updateOrder = async (req, res, next) => {
 
 exports.getAllOrdersById = async (req, res, next) => {
   try {
+    const role = req.role;
+    if (!role || !role.read) {
+      const error = new Error('Bạn không có quyền truy cập chức năng này');
+      error.statusCode = httpStatus.FORBIDDEN;
+      throw error;
+    }
+
     const userId = req.params.id;
     const orders = await Order.find({ userId: userId });
     const totalItems = await Order.find({ userId: userId }).countDocuments();

@@ -82,7 +82,7 @@ exports.signup = async (req, res, next) => {
       error.message = 'Tạo người dùng thất bại!';
       throw error;
     }
-    const accessToken = await generateToken({ email: email }, 'secret', '1m');
+    const accessToken = await generateToken({ email: email }, 'secret', '1h');
 
     if (!accessToken) {
       throw new Error();
@@ -123,7 +123,7 @@ exports.login = async (req, res, next) => {
       throw error;
     }
 
-    const accessToken = await generateToken({ email: email }, 'secret', '1m');
+    const accessToken = await generateToken({ email: email }, 'secret', '1h');
 
     if (!accessToken) {
       throw new Error();
@@ -142,10 +142,6 @@ exports.login = async (req, res, next) => {
       userId: user._id,
     });
   } catch (error) {
-    console.log(
-      '🚀 ~ file: auth.js:152 ~ exports.login= ~ error',
-      error.response.body.errors
-    );
     if (!error) {
       error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
     }

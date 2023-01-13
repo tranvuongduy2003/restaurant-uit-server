@@ -1,15 +1,15 @@
 const express = require('express');
 
 const userController = require('../controller/user');
-const isUser = require('../middleware/is-user');
 const isAuth = require('../middleware/is-auth');
+const checkRole = require('../middleware/check-role');
 
 const router = express.Router();
 
-router.post('/:id/pay', isAuth, isUser, userController.pay);
+router.post('/:id/pay', isAuth, checkRole.checkUserRole, userController.pay);
 
-router.get('/:id', isAuth, isUser, userController.getUser);
+router.get('/:id', isAuth, checkRole.checkUserRole, userController.getUser);
 
-router.put('/:id', isAuth, isUser, userController.editUser);
+router.put('/:id', isAuth, checkRole.checkUserRole, userController.editUser);
 
 module.exports = router;

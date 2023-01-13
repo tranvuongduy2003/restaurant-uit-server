@@ -1,9 +1,15 @@
 const Category = require('../models/category');
-const DeletedCategory = require('../models/deleted-category');
 const { httpStatus } = require('../utils/httpStatus');
 
 exports.getCategories = async (req, res, next) => {
   try {
+    const role = req.role;
+    if (!role || !role.read) {
+      const error = new Error('Bạn không có quyền truy cập chức năng này');
+      error.statusCode = httpStatus.FORBIDDEN;
+      throw error;
+    }
+
     let categories = [];
     let categoryParams = {};
     if (req.query.search) {
@@ -35,43 +41,15 @@ exports.getCategories = async (req, res, next) => {
   }
 };
 
-exports.getDeletedCategories = async (req, res, next) => {
-  try {
-    let categories = [];
-    let categoryParams = {};
-    if (req.query.search) {
-      categoryParams = {
-        ...categoryParams,
-        $text: { $search: req.query.search },
-      };
-    }
-    const totalItems = await DeletedCategory.find(
-      categoryParams
-    ).countDocuments();
-    if (req.query.page) {
-      const currentPage = req.query.page;
-      const perPage = 5;
-      categories = await DeletedCategory.find(categoryParams)
-        .skip((currentPage - 1) * perPage)
-        .limit(perPage);
-    } else {
-      categories = await DeletedCategory.find(categoryParams);
-    }
-    res.status(httpStatus.OK).json({
-      message: 'Fetched deleted categories successfully',
-      categories: categories,
-      totalItems: totalItems,
-    });
-  } catch (error) {
-    if (!error) {
-      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
-    }
-    next(error);
-  }
-};
-
 exports.getCategory = async (req, res, next) => {
   try {
+    const role = req.role;
+    if (!role || !role.read) {
+      const error = new Error('Bạn không có quyền truy cập chức năng này');
+      error.statusCode = httpStatus.FORBIDDEN;
+      throw error;
+    }
+
     const categoryId = req.params.categoryId;
     const category = await Category.findById(categoryId);
     res.status(httpStatus.OK).json({
@@ -88,6 +66,13 @@ exports.getCategory = async (req, res, next) => {
 
 exports.getPopular = async (req, res, next) => {
   try {
+    const role = req.role;
+    if (!role || !role.read) {
+      const error = new Error('Bạn không có quyền truy cập chức năng này');
+      error.statusCode = httpStatus.FORBIDDEN;
+      throw error;
+    }
+
     const totalItems = await Category.find({ popular: true }).countDocuments();
     const popular = await Category.find({ popular: true });
     res.status(httpStatus.OK).json({

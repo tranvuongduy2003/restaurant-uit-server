@@ -6,8 +6,8 @@ const User = require('../models/user');
 
 module.exports = async (req, res, next) => {
   const user = req.user;
-  if (user && user.role === role.ADMIN) {
-    next();
+  if (user && user.admin === true) {
+    return next();
   } else {
     const error = new Error('Bạn không có quyền truy cập tính năng này');
     error.statusCode = httpStatus.UNAUTHORIZED;

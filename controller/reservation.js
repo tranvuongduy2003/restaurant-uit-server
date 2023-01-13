@@ -4,6 +4,13 @@ const { status } = require('../utils/status');
 
 exports.reservate = async (req, res, next) => {
   try {
+    const role = req.role;
+    if (!role || !role.add) {
+      const error = new Error('Bạn không có quyền truy cập chức năng này');
+      error.statusCode = httpStatus.FORBIDDEN;
+      throw error;
+    }
+
     const userId = req.body.userId;
     const name = req.body.name;
     const phoneNumber = req.body.phoneNumber;
@@ -39,6 +46,13 @@ exports.reservate = async (req, res, next) => {
 
 exports.getAllReservation = async (req, res, next) => {
   try {
+    const role = req.role;
+    if (!role || !role.read) {
+      const error = new Error('Bạn không có quyền truy cập chức năng này');
+      error.statusCode = httpStatus.FORBIDDEN;
+      throw error;
+    }
+
     let reservations = [];
     let reservationParams = {};
     if (req.query.status) {
@@ -77,6 +91,13 @@ exports.getAllReservation = async (req, res, next) => {
 
 exports.deleteReservation = async (req, res, next) => {
   try {
+    const role = req.role;
+    if (!role || !role.delete) {
+      const error = new Error('Bạn không có quyền truy cập chức năng này');
+      error.statusCode = httpStatus.FORBIDDEN;
+      throw error;
+    }
+
     const id = req.params.id;
     const reservation = await Reservation.findByIdAndRemove(id);
     res.status(httpStatus.OK).json({
@@ -93,6 +114,13 @@ exports.deleteReservation = async (req, res, next) => {
 
 exports.updateReservation = async (req, res, next) => {
   try {
+    const role = req.role;
+    if (!role || !role.edit) {
+      const error = new Error('Bạn không có quyền truy cập chức năng này');
+      error.statusCode = httpStatus.FORBIDDEN;
+      throw error;
+    }
+
     const reservationId = req.params.id;
     const name = req.body.name;
     const phoneNumber = req.body.phoneNumber;

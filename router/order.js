@@ -1,18 +1,32 @@
 const express = require('express');
 
 const orderController = require('../controller/order');
-const isUser = require('../middleware/is-user');
-const isAdmin = require('../middleware/is-admin');
 const isAuth = require('../middleware/is-auth');
+const checkRole = require('../middleware/check-role');
 
 const router = express.Router();
 
-router.get('/', isAuth, isAdmin, orderController.getAllOrders);
+router.get('/', isAuth, checkRole.checkOrderRole, orderController.getAllOrders);
 
-router.delete('/:id', isAuth, isAdmin, orderController.deleteOrder);
+router.delete(
+  '/:id',
+  isAuth,
+  checkRole.checkOrderRole,
+  orderController.deleteOrder
+);
 
-router.put('/:id', isAuth, isAdmin, orderController.updateOrder);
+router.put(
+  '/:id',
+  isAuth,
+  checkRole.checkOrderRole,
+  orderController.updateOrder
+);
 
-router.get('/:id', isAuth, isUser, orderController.getAllOrdersById);
+router.get(
+  '/:id',
+  isAuth,
+  checkRole.checkOrderRole,
+  orderController.getAllOrdersById
+);
 
 module.exports = router;

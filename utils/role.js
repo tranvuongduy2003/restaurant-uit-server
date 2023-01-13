@@ -1,4 +1,7 @@
-module.exports = {
-  ADMIN: 'admin',
-  USER: 'user',
+module.exports.roleStatus = {
+  FOOD: '63be826447d4524d0dff4835',
+  CATEGORY: '63be82b247d4524d0dff4836',
+  USER: '63be82d647d4524d0dff4837',
+  BOOKING: '63be830747d4524d0dff4839',
+  ORDER: '63be836547d4524d0dff483b',
 };

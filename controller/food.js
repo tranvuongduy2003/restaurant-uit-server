@@ -1,10 +1,17 @@
 const Food = require('../models/food');
-const DeletedFood = require('../models/deleted-food');
 const Category = require('../models/category');
 const { httpStatus } = require('../utils/httpStatus');
+const { roleStatus } = require('../utils/role');
 
 exports.getFoods = async (req, res, next) => {
   try {
+    const role = req.role;
+    if (!role || !role.read) {
+      const error = new Error('Bạn không có quyền truy cập chức năng này');
+      error.statusCode = httpStatus.FORBIDDEN;
+      throw error;
+    }
+
     let foods = [];
     let foodParams = {};
     if (req.query.category) {
@@ -36,41 +43,15 @@ exports.getFoods = async (req, res, next) => {
   }
 };
 
-exports.getDeletedFoods = async (req, res, next) => {
-  try {
-    let foods = [];
-    let foodParams = {};
-    if (req.query.category) {
-      foodParams = { ...foodParams, categoryId: req.query.category };
-    }
-    if (req.query.search) {
-      foodParams = { ...foodParams, $text: { $search: req.query.search } };
-    }
-    const totalItems = await DeletedFood.find(foodParams).countDocuments();
-    if (req.query.page) {
-      const currentPage = req.query.page;
-      const perPage = 5;
-      foods = await DeletedFood.find(foodParams)
-        .skip((currentPage - 1) * perPage)
-        .limit(perPage);
-    } else {
-      foods = await DeletedFood.find(foodParams);
-    }
-    res.status(httpStatus.OK).json({
-      message: 'Fetched deleted foods successfully',
-      foods: foods,
-      totalItems: totalItems,
-    });
-  } catch (error) {
-    if (!error) {
-      error.statusCode = httpStatus.INTERNAL_SERVER_ERROR;
-    }
-    next(error);
-  }
-};
-
 exports.getFood = async (req, res, next) => {
   try {
+    const role = req.role;
+    if (!role || !role.read) {
+      const error = new Error('Bạn không có quyền truy cập chức năng này');
+      error.statusCode = httpStatus.FORBIDDEN;
+      throw error;
+    }
+
     const foodId = req.params.foodId;
     const food = await Food.findById(foodId);
     res.status(httpStatus.OK).json({
@@ -87,6 +68,13 @@ exports.getFood = async (req, res, next) => {
 
 exports.getBestDeals = async (req, res, next) => {
   try {
+    const role = req.role;
+    if (!role || !role.read) {
+      const error = new Error('Bạn không có quyền truy cập chức năng này');
+      error.statusCode = httpStatus.FORBIDDEN;
+      throw error;
+    }
+
     const totalItems = await Food.find({ bestDeals: true }).countDocuments();
     const bestDeals = await Food.find({ bestDeals: true });
     res.status(httpStatus.OK).json({
@@ -104,6 +92,13 @@ exports.getBestDeals = async (req, res, next) => {
 
 exports.getPopular = async (req, res, next) => {
   try {
+    const role = req.role;
+    if (!role || !role.read) {
+      const error = new Error('Bạn không có quyền truy cập chức năng này');
+      error.statusCode = httpStatus.FORBIDDEN;
+      throw error;
+    }
+
     const totalItems = await Food.find({ popular: true }).countDocuments();
     const popular = await Food.find({ popular: true });
     res.status(httpStatus.OK).json({

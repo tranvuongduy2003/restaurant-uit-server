@@ -3,68 +3,72 @@ const express = require('express');
 const adminController = require('../controller/admin');
 const isAdmin = require('../middleware/is-admin');
 const isAuth = require('../middleware/is-auth');
+const checkRole = require('../middleware/check-role');
 
 const router = express.Router();
 
-router.get('/user', isAuth, isAdmin, adminController.getUsers);
+router.get('/user', isAuth, checkRole.checkUserRole, adminController.getUsers);
 
-router.get('/user/bin', isAuth, isAdmin, adminController.getDeletedUser);
-
-router.delete(
-  '/user/bin/:id',
+router.put(
+  '/user/:id',
   isAuth,
-  isAdmin,
-  adminController.deleteUserPermanently
+  checkRole.checkUserRole,
+  adminController.editUser
 );
 
-router.put('/user/:id', isAuth, isAdmin, adminController.editUser);
-
-router.delete('/user/:id', isAuth, isAdmin, adminController.deleteUser);
-
-router.post('/user/:id', isAuth, isAdmin, adminController.recoverUser);
-
-router.post('/food', isAuth, isAdmin, adminController.postCreateFood);
-
-router.put('/food/:foodId', isAuth, isAdmin, adminController.updateFood);
-
-router.delete('/food/:foodId', isAuth, isAdmin, adminController.deleteFood);
-
-router.post('/food/:id', isAuth, isAdmin, adminController.recoverFood);
-
 router.delete(
-  '/food/bin/:foodId',
+  '/user/:id',
   isAuth,
-  isAdmin,
-  adminController.deleteFoodPermanently
+  checkRole.checkUserRole,
+  adminController.deleteUser
 );
 
-router.post('/category', isAuth, isAdmin, adminController.postCreateCategory);
+router.post(
+  '/food',
+  isAuth,
+  checkRole.checkFoodRole,
+  adminController.postCreateFood
+);
 
-router.post('/category/:id', isAuth, isAdmin, adminController.recoverCategory);
+router.put(
+  '/food/:foodId',
+  isAuth,
+  checkRole.checkFoodRole,
+  adminController.updateFood
+);
+
+router.delete(
+  '/food/:foodId',
+  isAuth,
+  checkRole.checkFoodRole,
+  adminController.deleteFood
+);
+
+router.post(
+  '/category',
+  isAuth,
+  checkRole.checkCategoryRole,
+  adminController.postCreateCategory
+);
 
 router.put(
   '/category/:categoryId',
   isAuth,
-  isAdmin,
+  checkRole.checkCategoryRole,
   adminController.updateCategory
 );
 
 router.delete(
   '/category/:categoryId',
   isAuth,
-  isAdmin,
+  checkRole.checkCategoryRole,
   adminController.deleteCategory
 );
 
-router.delete(
-  '/category/bin/:categoryId',
-  isAuth,
-  isAdmin,
-  adminController.deleteCategoryPermanently
-);
+router.get('/roles', isAuth, isAdmin, adminController.getRoles);
 
-router.get('/roles', adminController.getRoles);
+router.post('/roles', isAuth, isAdmin, adminController.createRole);
 
-router.put('/roles/:id', adminController.updateRole);
+router.put('/roles/:id', isAuth, isAdmin, adminController.updateRole);
 
 module.exports = router;

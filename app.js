@@ -47,8 +47,8 @@ app.use((req, res, next) => {
 });
 
 app.use('/auth', authRouter);
-app.use('/admin', adminRouter);
 app.use('/food', foodRouter);
+app.use('/admin', adminRouter);
 app.use('/category', categoryRouter);
 app.use('/reservation', reservationRouter);
 app.use('/user', userRouter);

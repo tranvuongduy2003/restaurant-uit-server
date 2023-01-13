@@ -34,10 +34,35 @@ const userSchema = new Schema(
       type: String,
       required: false,
     },
-    role: {
-      type: String,
-      required: true,
-    },
+    role: [
+      {
+        _id: {
+          type: Schema.Types.ObjectId,
+          ref: 'Role',
+          required: true,
+        },
+        name: {
+          type: String,
+          required: true,
+        },
+        read: {
+          type: Boolean,
+          required: true,
+        },
+        add: {
+          type: Boolean,
+          required: true,
+        },
+        edit: {
+          type: Boolean,
+          required: true,
+        },
+        delete: {
+          type: Boolean,
+          required: true,
+        },
+      },
+    ],
     cart: {
       items: [
         {
@@ -70,6 +95,10 @@ const userSchema = new Schema(
         require: false,
       },
       required: false,
+    },
+    admin: {
+      type: Boolean,
+      require: false,
     },
     refreshToken: {
       type: String,
