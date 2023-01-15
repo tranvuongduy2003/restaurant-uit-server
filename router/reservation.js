@@ -10,28 +10,28 @@ const router = express.Router();
 router.get(
   '/',
   isAuth,
-  checkRole.checkOrderRole,
+  checkRole.checkBookingRole,
   reservationController.getAllReservation
 );
 
 router.post(
   '/',
   isAuth,
-  checkRole.checkOrderRole,
+  checkRole.checkBookingRole,
   reservationController.reservate
 );
 
 router.put(
   '/:id',
   isAuth,
-  checkRole.checkOrderRole,
+  checkRole.checkBookingRole,
   reservationController.updateReservation
 );
 
 router.delete(
   '/:id',
   isAuth,
-  checkRole.checkOrderRole,
+  checkRole.checkBookingRole,
   reservationController.deleteReservation
 );
 

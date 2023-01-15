@@ -58,7 +58,7 @@ exports.checkBookingRole = async (req, res, next) => {
   );
 
   if (bookingRole) {
-    const role = await Role.find({ _id: bookingRole._id });
+    const role = await Role.findOne({ _id: bookingRole._id });
     req.role = role;
     next();
   } else {
@@ -74,7 +74,7 @@ exports.checkOrderRole = async (req, res, next) => {
   );
 
   if (orderRole) {
-    const role = await Role.find({ _id: orderRole._id });
+    const role = await Role.findOne({ _id: orderRole._id });
     req.role = role;
     next();
   } else {

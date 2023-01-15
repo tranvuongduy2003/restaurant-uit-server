@@ -99,8 +99,17 @@ exports.deleteFood = async (req, res, next) => {
     const foodId = req.params.foodId;
     const food = await Food.findByIdAndRemove(foodId);
     const category = await Category.findOne({ _id: food.categoryId });
-    const newFoods = category.foods.filter((item) => item._id !== food._id);
-    await Category.updateOne({ _id: food.categoryId }, { foods: newFoods });
+    const newFoods = category.foods.filter(
+      (item) => item._id.toString() !== food._id.toString()
+    );
+    console.log(
+      '🚀 ~ file: admin.js:103 ~ exports.deleteFood ~ newFoods',
+      newFoods
+    );
+    await Category.findByIdAndUpdate(
+      { _id: food.categoryId },
+      { foods: newFoods }
+    );
     res.status(httpStatus.OK).json({
       message: 'Delete food successfully',
       food: food,
@@ -187,7 +196,8 @@ exports.deleteCategory = async (req, res, next) => {
 
     const categoryId = req.params.categoryId;
     const category = await Category.findById(categoryId);
-    if (category.foods !== []) {
+
+    if (category.foods && category.foods.length > 0) {
       return res.status(httpStatus.FORBIDDEN).json({
         message: 'Cannot delete category',
       });

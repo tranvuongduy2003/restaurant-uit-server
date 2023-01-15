@@ -239,6 +239,13 @@ exports.logout = async (req, res, next) => {
 
 exports.getUser = async (req, res, next) => {
   try {
+    const role = req.role;
+    if (!role || !role.read) {
+      const error = new Error('Bạn không có quyền truy cập chức năng này');
+      error.statusCode = httpStatus.FORBIDDEN;
+      throw error;
+    }
+
     const userId = req.userId;
     const user = await User.findOne({ _id: userId });
 
@@ -255,6 +262,13 @@ exports.getUser = async (req, res, next) => {
 
 exports.editUser = async (req, res, next) => {
   try {
+    const role = req.role;
+    if (!role || !role.edit) {
+      const error = new Error('Bạn không có quyền truy cập chức năng này');
+      error.statusCode = httpStatus.FORBIDDEN;
+      throw error;
+    }
+
     const userId = req.params.id;
     const avatar = req.body.avatar;
     const name = req.body.name;
