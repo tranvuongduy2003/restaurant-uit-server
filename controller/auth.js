@@ -75,7 +75,9 @@ exports.signup = async (req, res, next) => {
         url: '',
       },
     };
+    console.log('🚀 ~ file: auth.js:78 ~ exports.signup= ~ userData', userData);
     const newUser = await createUser(userData);
+    console.log('🚀 ~ file: auth.js:80 ~ exports.signup= ~ newUser', newUser);
     if (!newUser) {
       const error = new Error();
       error.statusCode = httpStatus.NOT_FOUND;
@@ -83,6 +85,10 @@ exports.signup = async (req, res, next) => {
       throw error;
     }
     const accessToken = await generateToken({ email: email }, 'secret', '1h');
+    console.log(
+      '🚀 ~ file: auth.js:88 ~ exports.signup= ~ accessToken',
+      accessToken
+    );
 
     if (!accessToken) {
       throw new Error();
@@ -90,6 +96,10 @@ exports.signup = async (req, res, next) => {
 
     let refreshToken = randToken.generate(accessToken.length);
     await updateRefreshToken(newUser.email, refreshToken);
+    console.log(
+      '🚀 ~ file: auth.js:95 ~ exports.signup= ~ refreshToken',
+      refreshToken
+    );
 
     res.status(httpStatus.OK).json({
       accessToken: accessToken,
