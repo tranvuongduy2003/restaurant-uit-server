@@ -6,7 +6,52 @@ const sendgridMail = require('@sendgrid/mail');
 
 const User = require('../models/user');
 const { httpStatus } = require('../utils/httpStatus');
-const role = require('../utils/role');
+const { roleStatus } = require('../utils/role');
+
+var mongoose = require('mongoose');
+
+const defaultRoles = [
+  {
+    _id: mongoose.Types.ObjectId(roleStatus.FOOD),
+    name: 'Quản lý món ăn',
+    read: true,
+    add: true,
+    edit: true,
+    delete: true,
+  },
+  {
+    _id: mongoose.Types.ObjectId(roleStatus.CATEGORY),
+    name: 'Quản lý loại món',
+    read: true,
+    add: true,
+    edit: true,
+    delete: true,
+  },
+  {
+    _id: mongoose.Types.ObjectId(roleStatus.USER),
+    name: 'Quản lý người dùng',
+    read: true,
+    add: false,
+    edit: true,
+    delete: true,
+  },
+  {
+    _id: mongoose.Types.ObjectId(roleStatus.BOOKING),
+    name: 'Quản lý đặt chỗ',
+    read: true,
+    add: true,
+    edit: true,
+    delete: true,
+  },
+  {
+    _id: mongoose.Types.ObjectId(roleStatus.ORDER),
+    name: 'Quản lý đơn hàng',
+    read: true,
+    add: true,
+    edit: true,
+    delete: true,
+  },
+];
 
 sendgridMail.setApiKey(
   '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'
@@ -69,7 +114,7 @@ exports.signup = async (req, res, next) => {
       name: name,
       phoneNumber: phoneNumber,
       address: '',
-      role: role.USER,
+      role: defaultRoles,
       avatar: {
         ref: '',
         url: '',
