@@ -4,7 +4,8 @@ const Role = require('../models/role');
 const { roleStatus } = require('../utils/role');
 
 exports.checkFoodRole = async (req, res, next) => {
-  const roles = req.user.role;
+  const user = req.user;
+  const roles = user?.role;
   const foodRole = roles.find(
     (item) => item._id.toString() === roleStatus.FOOD
   );
@@ -20,7 +21,8 @@ exports.checkFoodRole = async (req, res, next) => {
 };
 
 exports.checkCategoryRole = async (req, res, next) => {
-  const roles = req.user.role;
+  const user = req.user;
+  const roles = user?.role;
   const categoryRole = roles.find(
     (item) => item._id.toString() === roleStatus.CATEGORY
   );
@@ -36,7 +38,8 @@ exports.checkCategoryRole = async (req, res, next) => {
 };
 
 exports.checkUserRole = async (req, res, next) => {
-  const roles = req.user.role;
+  const user = req.user;
+  const roles = user?.role;
   const userRole = roles.find(
     (item) => item._id.toString() === roleStatus.USER
   );
@@ -52,7 +55,8 @@ exports.checkUserRole = async (req, res, next) => {
 };
 
 exports.checkBookingRole = async (req, res, next) => {
-  const roles = req.user.role;
+  const user = req.user;
+  const roles = user?.role;
   const bookingRole = roles.find(
     (item) => item._id.toString() === roleStatus.BOOKING
   );
@@ -68,7 +72,8 @@ exports.checkBookingRole = async (req, res, next) => {
 };
 
 exports.checkOrderRole = async (req, res, next) => {
-  const roles = req.user.role;
+  const user = req.user;
+  const roles = user?.role;
   const orderRole = roles.find(
     (item) => item._id.toString() === roleStatus.ORDER
   );

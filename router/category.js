@@ -15,12 +15,14 @@ router.get(
 
 router.get(
   '/popular',
+  isAuth,
   checkRole.checkCategoryRole,
   categoryController.getPopular
 );
 
 router.get(
   '/:categoryId',
+  isAuth,
   checkRole.checkCategoryRole,
   categoryController.getCategory
 );
