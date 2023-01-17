@@ -1,8 +1,6 @@
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const randToken = require('rand-token');
-const sendgridMail = require('@sendgrid/mail');
 
 const User = require('../models/user');
 const { httpStatus } = require('../utils/httpStatus');
@@ -52,10 +50,6 @@ const defaultRoles = [
     delete: true,
   },
 ];
-
-sendgridMail.setApiKey(
-  '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'
-);
 
 const createUser = async (userData) => {
   try {

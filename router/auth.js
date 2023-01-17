@@ -17,11 +17,6 @@ router.post(
       .custom((value, { req }) => {
         return User.findOne({ email: value }).then((userDoc) => {
           if (userDoc) {
-            console.log(
-              '🚀 ~ file: auth.js:20 ~ returnUser.findOne ~ userDoc',
-              userDoc
-            );
-
             return Promise.reject('Email address already exists!');
           }
         });
