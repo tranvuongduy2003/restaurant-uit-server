@@ -13,7 +13,7 @@ exports.getUser = async (req, res, next) => {
       throw error;
     }
 
-    const userId = req.userId;
+    const userId = req.params.id;
     const user = await User.findOne({ _id: userId });
 
     res
