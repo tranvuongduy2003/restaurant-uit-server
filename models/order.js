@@ -39,7 +39,7 @@ const orderSchema = new Schema(
       {
         id: {
           type: Schema.Types.ObjectId,
-          ref: 'Category',
+          ref: 'Food',
           require: false,
         },
         name: {
